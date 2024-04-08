@@ -1,9 +1,11 @@
 #pragma once
+#include <string>
+#include <vector>
 
-int AESEncyptBinary(const char* key, const char* in, const char* out);
+int AESEncyptHextoHex(char* key, char* hexValue, char* encryptedHex);
 
-int AESEncryptText(const char* key, const char* in, const char* out);
+int AESEncryptTexttoHex(char* key, char* textValue, char* encryptedHex);
 
-int AESDecryptBinaryToBinary(const char* key, const char* in, const char* out);
+int AESDecryptHexToHex(char* key, char* hexValue, char* decryptedHex);
 
-int AESDecryptBinaryToText(const char* key, const char* in, const char* out);
+int AESDecryptHexToText(char* key, char* hexValue, char* decryptedTex);
