@@ -1,15 +1,19 @@
-#include "KeyExpansion.cpp"
+#include "AES.cpp"
+#include <stdio.h>
 
 
 int main(){
     unsigned char key[16] = {
         0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
     };
-    std::vector<unsigned char*> temp = ExpandKey(key);
-    for(int i = 0; i < 10; i++){
-        for(int j = 0; j < 16; j++)
-            std::cout << (int) temp[i][j] << ' ';
-        std::cout << std::endl;
+    unsigned char value[16] = {
+        0x00, 0x00, 0x01, 0x01, 0x03, 0x03, 0x07, 0x07, 0x0f, 0x0f, 0x1f, 0x1f, 0x3f, 0x3f, 0x7f, 0x7f
+    };
+    unsigned char encryptedValue[16];
+    AESEncyptHextoHex(key, value, encryptedValue);
+    for(int i = 0; i < 16; i++){
+        printf("%3x ", encryptedValue[i]);
     }
+    
     return 1;
 }

@@ -1,4 +1,4 @@
-#include "KeyExpansion.h"
+#include <vector>
 #include "constants.h"
 #include <iostream>
 
@@ -30,14 +30,14 @@ void AddRoundKey(unsigned char* lastKey, unsigned char* currentKey, unsigned cha
 std::vector<unsigned char*> ExpandKey(unsigned char* key){
 
     std::vector<unsigned char*> result;
-    result.resize(10);
-    for(int i = 0; i < 10; i++){
+    result.resize(11);
+    for(int i = 0; i < 11; i++){
         result[i] = new unsigned char[16];
     }
     for(int i = 0; i < 16; i++){
         result[0][i] = key[i];
     }
-    for(int i = 0; i < 9; i++){
+    for(int i = 0; i < 10; i++){
         unsigned char word[4] = {result[i][12], result[i][13], result[i][14], result[i][15]};
         RotateWord(word);
         SubWord(word);
