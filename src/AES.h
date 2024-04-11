@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
 #include <vector>
+#include "KeyExpansion.h"
 
-int AESEncyptHextoHex(char* key, char* hexValue, int size, char* encryptedHex);
+int AESEncyptHextoHex(unsigned char* key, unsigned char* hexValue, unsigned char* encryptedHex);
 
-int AESEncryptTexttoHex(char* key, char* textValue, int size, char* encryptedHex);
+int AESEncryptTexttoHex(char* key, char* textValue,unsigned char* encryptedHex);
 
-int AESDecryptHexToHex(char* key, char* hexValue, int size, char* decryptedHex);
+int AESDecryptHexToHex(unsigned char* key, unsigned char* hexValue, unsigned char* decryptedHex);
 
-int AESDecryptHexToText(char* key, char* hexValue, int size, char* decryptedTex);
+int AESDecryptHexToText(unsigned char* key, unsigned char* hexValue, char* decryptedTex);

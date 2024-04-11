@@ -1,11 +1,13 @@
 #pragma once
 #include <vector>
 
-void RotateWord(std::vector<std::vector<char>> key);
+void RotateWord(unsigned char* key);
 
 
-void SubWord(std::vector<std::vector<char>> key);
+void SubWord(unsigned char* key);
 
-void RoundConstant(std::vector<std::vector<char>> key, int roundNum);
+void RoundConstant(unsigned char* key, int roundNum);
 
-std::vector<std::vector<std::vector<char>>> ExpandKey(std::vector<std::vector<char>> key);
+
+
+std::vector<unsigned char*> ExpandKey(unsigned char* key);

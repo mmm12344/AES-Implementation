@@ -1,33 +1,48 @@
 #include "KeyExpansion.h"
 #include "constants.h"
+#include <iostream>
 
-void RotateWord(std::vector<std::vector<char>> key){
-    int size = key.size();
-    for(int i = 0; i < size-1; i++){
-        std::swap(key[i][size-1], key[i+1][size-1]);
+void RotateWord(unsigned char* key){
+    for(int i = 0; i < 3; i++){
+        std::swap(key[i+1], key[i]);
     }
 }
 
-void SubWord(std::vector<std::vector<char>> key){
-    int size = key.size();
-    for(int i = 0; i < size; i++){
-        key[i][size-1] = sBox[key[i][size-1]];
+void SubWord(unsigned char* key){
+    for(int i = 0; i < 4; i++){
+        key[i] = sBox[key[i]];
     }
 }
 
-void RoundConstant(std::vector<std::vector<char>> key, int roundNum){
-    int size = key.size();
-    key[0][size-1] = rcon[roundNum];
+void RoundConstant(unsigned char* key, int roundNum){
+    key[0] ^= rcon[roundNum];
 }
 
-std::vector<std::vector<std::vector<char>>> ExpandKey(std::vector<std::vector<char>> key){
-    std::vector<std::vector<std::vector<char>>> expandedKey;
-    std::vector<std::vector<char>> tmpKey(key);
+void AddRoundKey(unsigned char* lastKey, unsigned char* currentKey, unsigned char* word){
+    for(int i = 0; i < 4; i++){
+        currentKey[i] = lastKey[i] ^ word[i];
+    }
+    for(int i = 4; i < 16; i++){
+        currentKey[i] = currentKey[i-4] ^ lastKey[i];
+    }
+}
+
+std::vector<unsigned char*> ExpandKey(unsigned char* key){
+
+    std::vector<unsigned char*> result;
+    result.resize(10);
     for(int i = 0; i < 10; i++){
-        RotateWord(tmpKey);
-        SubWord(tmpKey);
-        RoundConstant(tmpKey, i+1);
-        expandedKey[i] = tmpKey;
+        result[i] = new unsigned char[16];
     }
-    return expandedKey;
+    for(int i = 0; i < 16; i++){
+        result[0][i] = key[i];
+    }
+    for(int i = 0; i < 9; i++){
+        unsigned char word[4] = {result[i][12], result[i][13], result[i][14], result[i][15]};
+        RotateWord(word);
+        SubWord(word);
+        RoundConstant(word, i+1);
+        AddRoundKey(result[i], result[i+1], word);
+    }
+    return result;
 }
